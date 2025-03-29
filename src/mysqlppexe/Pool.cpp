@@ -24,7 +24,7 @@ private:
 
 void MyConnectionPool::clear(bool all)
 {
-	// ScopedLock lock(mutex_);	// ensure we're not interfered with
+	ScopedLock lock(mutex_);	// ensure we're not interfered with
 
 	PoolIt it = pool_.begin();
 	while (it != pool_.end()) {
@@ -75,7 +75,7 @@ MysqlConn* MyConnectionPool::find_mru()
 
 MysqlConn* MyConnectionPool::grab()
 {
-	// ScopedLock lock(mutex_);	// ensure we're not interfered with
+	ScopedLock lock(mutex_);	// ensure we're not interfered with
 	remove_old_connections();
 	if (MysqlConn* mru = find_mru()) {
 		return mru;
@@ -92,7 +92,7 @@ MysqlConn* MyConnectionPool::grab()
 
 void MyConnectionPool::release(const MysqlConn* pc)
 {
-	// ScopedLock lock(mutex_);	// ensure we're not interfered with
+	ScopedLock lock(mutex_);	// ensure we're not interfered with
 
 	for (PoolIt it = pool_.begin(); it != pool_.end(); ++it) {
 		if (it->conn == pc) {
@@ -117,7 +117,7 @@ void MyConnectionPool::release(const MysqlConn* pc)
 
 void MyConnectionPool::remove(const MysqlConn* pc)
 {
-	// ScopedLock lock(mutex_);	// ensure we're not interfered with
+	ScopedLock lock(mutex_);	// ensure we're not interfered with
 
 	for (PoolIt it = pool_.begin(); it != pool_.end(); ++it) {
 		if (it->conn == pc) {
@@ -160,4 +160,21 @@ MysqlConn* MyConnectionPool::safe_grab()
 		pc = 0;
 	}
 	return pc;
+}
+
+MysqlConn* MyConnectionPool::create() 
+{
+	return new MysqlConn(conn_cfg);
+}
+
+
+ScopedMySqlConn::ScopedMySqlConn(MyConnectionPool* pool, bool safe) :
+	pool_(pool),
+	connection_(safe ? pool->safe_grab() : pool->grab())
+{
+}
+
+ScopedMySqlConn::~ScopedMySqlConn()
+{
+	pool_->release(connection_);
 }

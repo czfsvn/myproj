@@ -71,9 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\bin</OutDir>
+    <OutDir>..\..\bin\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>..\..\output\$(Configuration)\$(Platform)\$(ProjectName)</IntDir>
     <TargetName>$(ProjectName)_x64_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\..\bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>..\..\output\$(Configuration)\$(Platform)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,8 +119,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(CPPTHIRD)\spdlog1.5.1\lib\x64;$(CPPTHIRD)\mysql\lib;$(CPPTHIRD)\mysqlpp-3.3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmysql.lib;mysqlpp.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CPPTHIRD)\spdlog1.5.1\lib\x64;$(CPPTHIRD)\mysql\lib;$(CPPTHIRD)\mysqlpp-3.3\lib\x64;..\..\libs\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;mysqlpp.lib;spdlog.lib;Base.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -128,12 +132,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(CPPTHIRD)\mysql\include;$(CPPTHIRD)\mysqlpp-3.3\include;$(CPPTHIRD)\spdlog1.5.1\include;D:\WorkCodes\mycode\myproj\src\Base</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(CPPTHIRD)\spdlog1.5.1\lib\x64;$(CPPTHIRD)\mysql\lib;$(CPPTHIRD)\mysqlpp-3.3\lib\x64;..\..\libs\$(Configuration)\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;mysqlpp.lib;spdlog.lib;Base.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

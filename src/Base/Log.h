@@ -126,10 +126,11 @@ namespace cncpp
 
         ~TinyLogger() {}
 
-        void init()
+        void init();
+#if 0
         {
             auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-            console_sink->set_level(spdlog::level::warn);
+            console_sink->set_level(spdlog::level::trace);
             //console_sink->set_pattern("[%Y-%m-%d %H:%M:%S] [%l][%t] %v");
 
             auto hour_file_sink = std::make_shared<cncpp::MyHourlyFileSink_mt>("../../log/hourly_log");
@@ -141,6 +142,7 @@ namespace cncpp
                 "", std::initializer_list<spdlog::sink_ptr>{ console_sink, hour_file_sink });
             tinylogger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l][%t] %v");
         }
+#endif
 
         std::shared_ptr<spdlog::logger> log()
         {

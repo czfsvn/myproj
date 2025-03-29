@@ -2,12 +2,9 @@
 
 #include "Log.h"
 #include "Pool.h"
+#include "Stock.h"
 
-// 连接参数
-const char* db_host = "localhost";
-const char* db_user = "root";
-const char* db_pass = "123456";
-const char* db_name = "myapp_db";  // 初始化时可能不存在，后续创建
+
 
 int main()
 {
@@ -18,7 +15,32 @@ int main()
 	ERR("test{}", 5);
 	CRITICAL("test{}", 5);
 
-	MyConnectionPool::getMe();
+	cncpp::MysqlConfig config;
+	config.host = "localhost";
+	config.user = "root";
+	config.password = "123456";
+	config.database = "mysql_cpp_data";
+
+	MyConnectionPool::getMe().init(config);
+
+	{
+		ScopedMySqlConn con;
+		std::vector<Stock> vec = con->query<Stock>("select * from stock");
+		for ( Stock& st : vec)
+		{
+			st.print();
+		}
+	}
+
+	{
+		ScopedMySqlConn con;
+		std::vector<Stock> vec = con->query<Stock>("select * from stock", "where item='Pickle Relish'");
+		for (Stock& st : vec)
+		{
+			st.print();
+		}
+	}
+	
 	std::cout << "hello, main\n";
 	return 1;
 }
