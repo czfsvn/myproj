@@ -8,10 +8,19 @@ class Stock
 public:
 	Stock(const mysqlpp::Row& row);
 
+	void replaceDB();
+	void updateDB();
+	void insertDB();
+	void selectDB(const char* where = NULL);
+
 	void print()
 	{
 		INFO("{}\t, {}\t, {}\t, {}\t, {}\t, {}\t", item_, num_, weight_, price_, sdate_, description_);
 	}
+
+	std::string FieldList();
+
+	std::string ValueList();
 
 private:
 	std::string item_ = {};

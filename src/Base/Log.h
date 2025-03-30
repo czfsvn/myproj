@@ -62,12 +62,8 @@ namespace cncpp
 
             spdlog::memory_buf_t formatted;
             spdlog::sinks::base_sink<Mutext>::formatter_->format(msg, formatted);
-
             file_.write(formatted.data(), formatted.size());
-
-            //std::string logMessage(formatted.begin(), formatted.end());
-            //file_ << logMessage;// << std::endl;
-            //file_.flush();
+            file_.flush();
         }
 
         void flush_() override
@@ -78,15 +74,12 @@ namespace cncpp
     private:
         void open_file()
         {
-            time_t             now = TimeUtils::getRealTimeSec();// time(NULL);
+            time_t             now = TimeUtils::getRealTimeSec();
             std::tm tm_time;
             TimeUtils::getLocalTime(tm_time, now);
-            // std::ostringstream oss;
-            /// oss << base_filename_ << "_" << std::put_time(&tm_time, "%Y-%m-%d_%H") << ".log";
-            // const std::string data_str = oss.str();
-            // const std::string& new_filename = oss.str();
-            std::string new_filename = base_filename_ + "_ssss.log";
-            //std::string new_filename = "hour.log";
+            std::ostringstream oss;
+            oss << base_filename_ << "_" << std::put_time(&tm_time, "%Y-%m-%d_%H") << ".log";
+            const std::string& new_filename = oss.str();
 
             file_.close();
             file_.open(new_filename.c_str(), std::ios::app | std::ios::out);

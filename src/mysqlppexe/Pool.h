@@ -6,25 +6,21 @@
 #include "MySqlConn.h"
 #include "Singleton.h"
 
-class ScopedLock {
-public:
-	// 构造函数，加锁
-	ScopedLock(std::mutex& m) : mutex_(m) {
-		mutex_.lock();
-	}
-
-	// 析构函数，解锁
-	~ScopedLock() {
-		mutex_.unlock();
-	}
-
-	// 禁止拷贝构造和赋值操作
-	ScopedLock(const ScopedLock&) = delete;
-	ScopedLock& operator=(const ScopedLock&) = delete;
+#if 0
+// 后续改为这种模版类型
+template <typename T>
+class MyTemplateClass : public Singleton<MyTemplateClass<T>> { // 注意：CRTP 模式
+	friend class Singleton<MyTemplateClass<T>>; // 声明友元以访问私有构造函数
 
 private:
-	std::mutex& mutex_;
+	MyTemplateClass() { /* 初始化逻辑（可依赖 T 类型） */ }
+	~MyTemplateClass() = default;
+
+public:
+	void ProcessData(const T& data) { /* ... */ }
 };
+
+#endif
 
 class MyConnectionPool : public cncpp::Singleton<MyConnectionPool>
 {

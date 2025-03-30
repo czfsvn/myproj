@@ -3,7 +3,7 @@
 #include "Log.h"
 #include "Pool.h"
 #include "Stock.h"
-
+#include "ApiTest.h"
 
 
 int main()
@@ -41,6 +41,8 @@ int main()
 		}
 	}
 	
+	ns_api::main();
+
 	std::cout << "hello, main\n";
 	return 1;
 }

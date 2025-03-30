@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\..\bin\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>..\..\output\$(Configuration)\$(Platform)\$(ProjectName)</IntDir>
-    <TargetName>$(ProjectName)_x64_d</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\..\bin\$(Configuration)\$(Platform)\</OutDir>
@@ -145,12 +145,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\mysqlppexe\ApiTest.cpp" />
     <ClCompile Include="..\..\src\mysqlppexe\main.cpp" />
     <ClCompile Include="..\..\src\mysqlppexe\MySqlConn.cpp" />
     <ClCompile Include="..\..\src\mysqlppexe\Pool.cpp" />
     <ClCompile Include="..\..\src\mysqlppexe\Stock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\mysqlppexe\ApiTest.h" />
     <ClInclude Include="..\..\src\mysqlppexe\MySqlConn.h" />
     <ClInclude Include="..\..\src\mysqlppexe\Pool.h" />
     <ClInclude Include="..\..\src\mysqlppexe\Stock.h" />
