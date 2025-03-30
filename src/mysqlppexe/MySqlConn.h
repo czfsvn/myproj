@@ -54,6 +54,11 @@ public:
   void commit();
   void rollback();
 
+  mysqlpp::Connection& getConn()
+  {
+      return m_conn;
+  }
+
 private:
   mysqlpp::Connection m_conn;
   bool m_inTransaction = false;

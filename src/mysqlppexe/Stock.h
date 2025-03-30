@@ -13,7 +13,7 @@ public:
 	void insertDB();
 	void selectDB(const char* where = NULL);
 
-	void print()
+	void print() const
 	{
 		INFO("{}\t, {}\t, {}\t, {}\t, {}\t, {}\t", item_, num_, weight_, price_, sdate_, description_);
 	}
