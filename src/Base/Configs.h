@@ -2,16 +2,14 @@
 
 #include <string>
 
-namespace cncpp
-{
-    // Á¬½ÓÅäÖÃ
-    struct MysqlConfig
-    {
-        std::string host = {};
-        std::string user = {};
-        std::string password = {};
-        std::string database = {};
-        unsigned int port = 3306;
-        const char* charset = "utf8mb4";
-    };
-}
+namespace cncpp {
+// è¿æ¥é…ç½®
+struct MysqlConfig {
+  std::string host = {};
+  std::string user = {};
+  std::string password = {};
+  std::string database = {};
+  unsigned int port = 3306;
+  const char *charset = "utf8mb4";
+};
+} // namespace cncpp

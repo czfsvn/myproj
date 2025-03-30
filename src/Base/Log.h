@@ -1,12 +1,12 @@
 #pragma once
 
-
-#include <iomanip>
 #include <fstream>
-#include <sstream>
-#include <spdlog/spdlog.h>
+#include <iomanip>
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+#include <sstream>
+
 
 #include "Singleton.h"
 #include "TimeUtils.h"
@@ -15,12 +15,12 @@
 
 #ifdef SPDLOG
 
-#define TRACE    cncpp::TinyLogger::getMe().log()->trace     // 0
-#define DEBUG    cncpp::TinyLogger::getMe().log()->debug     // 1
-#define INFO     cncpp::TinyLogger::getMe().log()->info      // 2
-#define WARN     cncpp::TinyLogger::getMe().log()->warn      // 3
-#define ERR      cncpp::TinyLogger::getMe().log()->error     // 4
-#define CRITICAL cncpp::TinyLogger::getMe().log()->critical  // 5
+#define TRACE cncpp::TinyLogger::getMe().log()->trace       // 0
+#define DEBUG cncpp::TinyLogger::getMe().log()->debug       // 1
+#define INFO cncpp::TinyLogger::getMe().log()->info         // 2
+#define WARN cncpp::TinyLogger::getMe().log()->warn         // 3
+#define ERR cncpp::TinyLogger::getMe().log()->error         // 4
+#define CRITICAL cncpp::TinyLogger::getMe().log()->critical // 5
 
 #else
 
@@ -33,93 +33,81 @@
 
 #endif
 
-namespace cncpp
-{
-    template <typename Mutext>
-    class MyHourlyFileSink : public spdlog::sinks::base_sink<Mutext>
+namespace cncpp {
+template <typename Mutext>
+class MyHourlyFileSink : public spdlog::sinks::base_sink<Mutext> {
+public:
+  MyHourlyFileSink(const std::string &base_filename,
+                   int flush_interval_seconds = 3600)
+      : base_filename_(base_filename), flush_interval_(flush_interval_seconds) {
+    open_file();
+  }
+
+  ~MyHourlyFileSink() {}
+
+protected:
+  void sink_it_(const spdlog::details::log_msg &msg) override {
+    uint32_t now = time(NULL);
+    // if (now >= next_check_time_)  // todo: some bugs accured
     {
-    public:
-        MyHourlyFileSink(const std::string& base_filename, int flush_interval_seconds = 3600)
-            : base_filename_(base_filename), flush_interval_(flush_interval_seconds)
-        {
-            open_file();
-        }
+      uint32_t now_hour = TimeUtils::getLocalHour(now);
+      if (now_hour != current_hour_) {
+        open_file();
+      }
+    }
 
-        ~MyHourlyFileSink() {}
+    spdlog::memory_buf_t formatted;
+    spdlog::sinks::base_sink<Mutext>::formatter_->format(msg, formatted);
+    file_.write(formatted.data(), formatted.size());
+    file_.flush();
+  }
 
-    protected:
-        void sink_it_(const spdlog::details::log_msg& msg) override
-        {
-            uint32_t now = time(NULL);
-            // if (now >= next_check_time_)  // todo: some bugs accured
-            {
-                uint32_t now_hour = TimeUtils::getLocalHour(now);
-                if (now_hour != current_hour_)
-                {
-                    open_file();
-                }
-            }
+  void flush_() override { file_.flush(); }
 
-            spdlog::memory_buf_t formatted;
-            spdlog::sinks::base_sink<Mutext>::formatter_->format(msg, formatted);
-            file_.write(formatted.data(), formatted.size());
-            file_.flush();
-        }
+private:
+  void open_file() {
+    time_t now = TimeUtils::getRealTimeSec();
+    std::tm tm_time;
+    TimeUtils::getLocalTime(tm_time, now);
+    std::ostringstream oss;
+    oss << base_filename_ << "_" << std::put_time(&tm_time, "%Y-%m-%d_%H")
+        << ".log";
+    const std::string &new_filename = oss.str();
 
-        void flush_() override
-        {
-            file_.flush();
-        }
+    file_.close();
+    file_.open(new_filename.c_str(), std::ios::app | std::ios::out);
 
-    private:
-        void open_file()
-        {
-            time_t             now = TimeUtils::getRealTimeSec();
-            std::tm tm_time;
-            TimeUtils::getLocalTime(tm_time, now);
-            std::ostringstream oss;
-            oss << base_filename_ << "_" << std::put_time(&tm_time, "%Y-%m-%d_%H") << ".log";
-            const std::string& new_filename = oss.str();
+    if (!file_.is_open()) {
+      std::cerr << "Failed to open file: " << new_filename << std::endl;
+      return;
+    }
 
-            file_.close();
-            file_.open(new_filename.c_str(), std::ios::app | std::ios::out);
+    current_hour_ = tm_time.tm_hour;
 
-            if (!file_.is_open())
-            {
-                std::cerr << "Failed to open file: " << new_filename << std::endl;
-                return;
-            }
+    // ä¸‹æ¬¡æ£€è½¦åˆ‡æ¢æ–‡ä»¶çš„æ—¶é—´ï¼Œä¸”æå‰10ç§’å¼€å§‹æ£€æŸ¥
+    // todo: checkbugs
+    next_check_time_ = TimeUtils::getLocalDayZero(now) +
+                       (current_hour_ + 1) * TimeUtils::kHourSeconds - 10;
+  }
 
-            current_hour_ = tm_time.tm_hour;
+private:
+  std::string base_filename_ = "hours";
+  std::ofstream file_;
+  uint32_t flush_interval_ = 0;  // åˆ·æ–°é—´éš”ï¼Œå•ä½ä¸ºç§’
+  uint32_t next_check_time_ = 0; // ä¸‹ä¸€æ¬¡æ£€æŸ¥æ—¶é—´
+  uint32_t current_hour_ = 0;    // å½“å‰å°æ—¶
+};
 
-            // ÏÂ´Î¼ì³µÇÐ»»ÎÄ¼þµÄÊ±¼ä£¬ÇÒÌáÇ°10Ãë¿ªÊ¼¼ì²é
-            // todo: checkbugs
-            next_check_time_ = TimeUtils::getLocalDayZero(now)
-                + (current_hour_ + 1) * TimeUtils::kHourSeconds - 10;
-        }
+using MyHourlyFileSink_mt = MyHourlyFileSink<std::mutex>;
+using MyHourlyFileSink_st = MyHourlyFileSink<spdlog::details::null_mutex>;
 
-    private:
-        std::string   base_filename_ = "hours";
-        std::ofstream file_;
-        uint32_t      flush_interval_ = 0;  // Ë¢ÐÂ¼ä¸ô£¬µ¥Î»ÎªÃë
-        uint32_t      next_check_time_ = 0;  // ÏÂÒ»´Î¼ì²éÊ±¼ä
-        uint32_t      current_hour_ = 0;  // µ±Ç°Ð¡Ê±
-    };
+class TinyLogger : public Singleton<TinyLogger> {
+public:
+  TinyLogger() { init(); }
 
-    using MyHourlyFileSink_mt = MyHourlyFileSink<std::mutex>;
-    using MyHourlyFileSink_st = MyHourlyFileSink<spdlog::details::null_mutex>;
+  ~TinyLogger() {}
 
-    class TinyLogger : public Singleton<TinyLogger>
-    {
-    public:
-        TinyLogger()
-        {
-            init();
-        }
-
-        ~TinyLogger() {}
-
-        void init();
+  void init();
 #if 0
         {
             auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -137,12 +125,9 @@ namespace cncpp
         }
 #endif
 
-        std::shared_ptr<spdlog::logger> log()
-        {
-            return tinylogger;
-        }
+  std::shared_ptr<spdlog::logger> log() { return tinylogger; }
 
-    private:
-        std::shared_ptr<spdlog::logger> tinylogger = nullptr;
-    };
-}  // namespace cncpp
+private:
+  std::shared_ptr<spdlog::logger> tinylogger = nullptr;
+};
+} // namespace cncpp

@@ -1,68 +1,63 @@
 #pragma once
 
-#include <vector>
 #include <mysql++.h>
+#include <vector>
+
 
 #include "Configs.h"
 
-class MySQLException : public std::runtime_error 
-{
+class MySQLException : public std::runtime_error {
 public:
-    MySQLException(const std::string& msg, const std::string& sql = "")
-        : std::runtime_error(msg + " [SQL: " + sql + "]") {}
+  MySQLException(const std::string &msg, const std::string &sql = "")
+      : std::runtime_error(msg + " [SQL: " + sql + "]") {}
 };
 
-class MysqlConn
-{
+class MysqlConn {
 public:
-
-
 public:
-    bool ping() { return true; }
+  bool ping() { return true; }
 
-    // ≥ı ºªØ¡¨Ω”£®RAII£©
-    explicit MysqlConn(const cncpp::MysqlConfig& config);
-    ~MysqlConn();
+  // ÂàùÂßãÂåñËøûÊé•ÔºàRAIIÔºâ
+  explicit MysqlConn(const cncpp::MysqlConfig &config);
+  ~MysqlConn();
 
-    // ÷¥––≤È—Ø£¨∑µªÿΩ·π˚ºØ£®∑∫–Õ÷ß≥÷£©
-    template <typename T = std::vector<std::string>>
-    std::vector<T> query(const std::string& sql, const mysqlpp::SQLTypeAdapter& params = "")
-    {
-        checkConnection();
-        try 
-        {
-            mysqlpp::Query query = m_conn.query(sql);
-            if (!params.is_null()) {
-                query << " " <<  params;
-            }
+  // ÊâßË°åÊü•ËØ¢ÔºåËøîÂõûÁªìÊûúÈõÜÔºàÊ≥õÂûãÊîØÊåÅÔºâ
+  template <typename T = std::vector<std::string>>
+  std::vector<T> query(const std::string &sql,
+                       const mysqlpp::SQLTypeAdapter &params = "") {
+    checkConnection();
+    try {
+      mysqlpp::Query query = m_conn.query(sql);
+      if (!params.is_null()) {
+        query << " " << params;
+      }
 
-            mysqlpp::StoreQueryResult res = query.store();
-            std::vector<T> result;
+      mysqlpp::StoreQueryResult res = query.store();
+      std::vector<T> result;
 
-            for (const auto& row : res) 
-            {
-                result.push_back(row);
-            }
-            return result;
-        }
-        catch (const mysqlpp::BadQuery& e) {
-            handleSQLError(e, sql);
-            return {}; // ±‹√‚±‡“Î∆˜æØ∏Ê
-        }
+      for (const auto &row : res) {
+        result.push_back(row);
+      }
+      return result;
+    } catch (const mysqlpp::BadQuery &e) {
+      handleSQLError(e, sql);
+      return {}; // ÈÅøÂÖçÁºñËØëÂô®Ë≠¶Âëä
     }
+  }
 
-    // ÷¥––∏¸–¬£®INSERT/UPDATE/DELETE£©
-    size_t execute(const std::string& sql, const mysqlpp::SQLTypeAdapter& params = {});
+  // ÊâßË°åÊõ¥Êñ∞ÔºàINSERT/UPDATE/DELETEÔºâ
+  size_t execute(const std::string &sql,
+                 const mysqlpp::SQLTypeAdapter &params = {});
 
-    //  ¬ŒÒπ‹¿Ì
-    void beginTransaction();
-    void commit();
-    void rollback();
+  // ‰∫ãÂä°ÁÆ°ÁêÜ
+  void beginTransaction();
+  void commit();
+  void rollback();
 
 private:
-    mysqlpp::Connection m_conn;
-    bool m_inTransaction = false;
+  mysqlpp::Connection m_conn;
+  bool m_inTransaction = false;
 
-    void checkConnection();
-    void handleSQLError(const mysqlpp::BadQuery& e, const std::string& sql);
+  void checkConnection();
+  void handleSQLError(const mysqlpp::BadQuery &e, const std::string &sql);
 };
