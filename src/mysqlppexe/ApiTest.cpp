@@ -119,6 +119,29 @@ namespace ns_query
     }
 }  // namespace ns_query
 
+namespace ns_stockapi
+{
+    void test_loadAll()
+    {
+        vector<Stock> res = Stock::loadAll("");
+        for (const auto& item : res)
+        {
+            item.print();
+        }
+
+        vector<Stock> res2 = Stock::loadAll("num=100");
+        for (const auto& item : res2)
+        {
+            item.print();
+        }
+    }
+
+    void test_delete()
+    {
+        Stock::deleteWhere("num=100");            
+    }
+}
+
 namespace ns_api
 {
     void main()
@@ -127,6 +150,9 @@ namespace ns_api
         ns_query::test_quote1();
         ns_query::test_quote2();
         ns_query::test_template();
+
+        ns_stockapi::test_loadAll();
+        ns_stockapi::test_delete();
         std::cout << "hello, mysqlpp\n";
     }
 }  // namespace ns_api

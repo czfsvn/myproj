@@ -46,8 +46,9 @@ public:
   ~MyHourlyFileSink() {}
 
 protected:
-  void sink_it_(const spdlog::details::log_msg &msg) override {
-    uint32_t now = time(NULL);
+  void sink_it_(const spdlog::details::log_msg &msg) override 
+  {
+    time_t now = time(NULL);
     // if (now >= next_check_time_)  // todo: some bugs accured
     {
       uint32_t now_hour = TimeUtils::getLocalHour(now);
@@ -86,7 +87,7 @@ private:
 
     // 下次检车切换文件的时间，且提前10秒开始检查
     // todo: checkbugs
-    next_check_time_ = TimeUtils::getLocalDayZero(now) +
+    next_check_time_ = (uint32_t)TimeUtils::getLocalDayZero(now) +
                        (current_hour_ + 1) * TimeUtils::kHourSeconds - 10;
   }
 

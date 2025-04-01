@@ -8,6 +8,11 @@ class Stock
 public:
 	Stock(const mysqlpp::Row& row);
 
+
+	static std::vector<Stock> loadAll(const std::string& where);
+    static bool               deleteWhere(const std::string& where);
+    static bool               replaceAll(const std::vector<Stock>& cont);
+
 	void replaceDB();
 	void updateDB();
 	void insertDB();
@@ -18,7 +23,7 @@ public:
 		INFO("{}\t, {}\t, {}\t, {}\t, {}\t, {}\t", item_, num_, weight_, price_, sdate_, description_);
 	}
 
-	std::string FieldList();
+	static std::string FieldList();
 
 	std::string ValueList();
 
