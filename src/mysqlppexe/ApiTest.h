@@ -2,5 +2,5 @@
 
 namespace ns_api
 {
-	void main();
+    void main();
 }
