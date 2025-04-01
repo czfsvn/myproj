@@ -1,5 +1,5 @@
 #include "Stock.h"
-#include <sstream>
+//#include <sstream>
 
 
 Stock::Stock(const mysqlpp::Row& row)
@@ -14,11 +14,14 @@ Stock::Stock(const mysqlpp::Row& row)
 
 std::string Stock::FieldList()
 {
-	return "";
+	//return "";
 	//std::ostringstream oss;
 	//oss << "item, num, weight, price, sdate, description";
 	//return  oss.str();
+	std::string ret = "item, num, weight, price, sdate, description";
+	return ret;
 }
+
 #if 0
 std::string Stock::ValueList()
 {
@@ -27,6 +30,7 @@ std::string Stock::ValueList()
 		<< price_ << "`,`" << sdate_ << "`,`" << description_ << "`";
 	return oss.str();
 }
+
 
 void Stock::replaceDB()
 {

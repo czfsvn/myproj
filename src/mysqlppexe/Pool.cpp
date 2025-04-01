@@ -1,26 +1,8 @@
 #include "Pool.h"
-#include <algorithm>
-#include <functional>
 
-template <typename ConnInfoT>
-class TooOld : std::unary_function<ConnInfoT, bool>
-{
-public:
-#if !defined(DOXYGEN_IGNORE)
-	TooOld(unsigned int tmax) :
-		min_age_(time(0) - tmax)
-	{
-	}
 
-	bool operator()(const ConnInfoT& conn_info) const
-	{
-		return !conn_info.in_use && conn_info.last_used <= min_age_;
-	}
 
-#endif
-private:
-	time_t min_age_;
-};
+#if 0
 
 void MyConnectionPool::clear(bool all)
 {
@@ -165,7 +147,6 @@ MysqlConn* MyConnectionPool::create()
 	return new MysqlConn(conn_cfg);
 }
 
-
 ScopedMySqlConn::ScopedMySqlConn(MyConnectionPool* pool, bool safe) :
 	pool_(pool),
 	connection_(safe ? pool->safe_grab() : pool->grab())
@@ -176,3 +157,4 @@ ScopedMySqlConn::~ScopedMySqlConn()
 {
 	pool_->release(connection_);
 }
+#endif

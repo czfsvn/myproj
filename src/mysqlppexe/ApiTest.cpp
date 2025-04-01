@@ -30,7 +30,7 @@ namespace ns_query
 		//mysqlpp::Query query = con->getConn().query("select item,description from stock");
 		mysqlpp::Query query = con->getConn().query("select * from stock");
 		vector<Stock> res;
-		query.storein(res);	// ĞèÒªÂú×ã Stock ¹¹Ôìº¯ÊıÓë row µÄ×ª»»
+		query.storein(res);	// éœ€è¦æ»¡è¶³ Stock æ„é€ å‡½æ•°ä¸ row çš„è½¬æ¢
 
 		for (const auto& item : res)
 		{
