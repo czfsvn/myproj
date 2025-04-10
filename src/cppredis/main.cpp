@@ -1,6 +1,6 @@
 #include <cpp_redis/cpp_redis>
 #include <iostream>
-#include <tacopie/tacopie>
+//#include <tacopie/tacopie>
 
 int main()
 {
@@ -10,6 +10,7 @@ int main()
     // 创建客户端
     cpp_redis::client client;
 
+    #if 0
     // 连接Redis服务器
     client.connect("192.168.98.63", 6379,
         [](const std::string& host, std::size_t port, cpp_redis::connect_state status)
@@ -39,5 +40,6 @@ int main()
     // 同步等待
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
+    #endif
     return 0;
 }
