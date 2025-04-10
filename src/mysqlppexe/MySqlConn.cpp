@@ -79,3 +79,23 @@ void MysqlConn::handleSQLError(const mysqlpp::BadQuery& e, const std::string& sq
     throw MySQLException(
         std::string("SQL Error: ") + e.what() + " (Code: " + std::to_string(e.errnum()) + ")", sql);
 }
+
+uint32_t MysqlConn::getMaxMysqlPacketSize() 
+{
+    mysqlpp::Query            query = m_conn.query("SHOW VARIABLES LIKE 'max_allowed_packet'");
+    mysqlpp::StoreQueryResult res   = query.store();
+    if (res && res.num_rows() == 1)
+        return std::stol(res[0]["Value"].c_str());
+
+    return 0;
+}
+
+uint32_t MysqlConn::getMaxSafeMysqlPacketSize()
+{
+    static const uint32_t surplus_size = 1000;
+    const uint32_t max_size = getMaxMysqlPacketSize();
+    if (!max_size || max_size <= surplus_size)
+        return 0;
+
+    return max_size - surplus_size;
+}

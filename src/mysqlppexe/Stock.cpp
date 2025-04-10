@@ -1,6 +1,6 @@
 #include "Stock.h"
 //#include <sstream>
-#include "Pool.h"
+//#include "Pool.h"
 
 
 Stock::Stock(const mysqlpp::Row& row)
@@ -13,93 +13,62 @@ Stock::Stock(const mysqlpp::Row& row)
 	description_ = row["description"];
 }
 
-std::string Stock::FieldList()
+Stock::Stock(const std::string& item, const std::string& num, const std::string& weight,
+    const std::string& price, const std::string& sdate, const std::string& description)
 {
-	//return "";
-	//std::ostringstream oss;
-	//oss << "item, num, weight, price, sdate, description";
-	//return  oss.str();
+    item_        = item;
+    num_         = std::stoll(num);
+    weight_      = std::stod(weight);
+    price_       = std::stod(price);
+    sdate_       = sdate;
+    description_ = description;
+}
+
+std::string Stock::field_list()
+{
 	std::string ret = "item, num, weight, price, sdate, description";
 	return ret;
 }
 
 
-std::string Stock::ValueList()
+std::string Stock::value_list() const
 {
-	//std::ostringstream oss;
-	//oss << "`" << item_ << "`,`" << num_ << "`,`" << weight_ << "`,`" 
-	//	<< price_ << "`,`" << sdate_ << "`,`" << description_ << "`";
-	//return oss.str();
-	
-	//mysqlpp::SQLQueryParms oss;
-    //oss << "`" << item_ << "`,`" << num_ << "`,`" << weight_ << "`,`"
-    //	<< price_ << "`,`" << sdate_ << "`,`" << description_ << "`";
-    //return std::string(oss.data(), oss.size());
+    const std::string singlequote = "'";
+    const std::string conn_str    = singlequote + "," + singlequote;
 
-    return "";
+    // tobe optimized to std::ostringstream
+    std::string ret = singlequote + item_ + conn_str + std::to_string(num_) + conn_str
+                      + std::to_string(weight_) + conn_str + std::to_string(price_) + conn_str
+                      + sdate_ + conn_str + description_ + singlequote;
+    return ret;
 }
 
-std::vector<Stock> Stock::loadAll(const std::string& where) 
+std::string Stock::table()
+{
+    return "stock";
+}
+
+std::vector<Stock> Stock::loadWhere(const std::string& where)
 {
     ScopedMySqlConn con;
-    mysqlpp::Query query = con->getConn().query();
-    query << "select " << FieldList() << " from Stock";
-    if (where.size())
-        query << " where " << where;
-
-	std::vector<Stock> res;
-    query.storein(res);  // 需要满足 Stock 构造函数与 row 的转换
-
-	return res;
+    return con->loadWhere<Stock>(where);
 }
 
 bool Stock::deleteWhere(const std::string& where)
 {
     ScopedMySqlConn con;
-    mysqlpp::Query  query = con->getConn().query();
-    query << "delete  from Stock";
-    if (where.size())
-        query << " where " << where;
-
-	mysqlpp::SimpleResult res = query.execute();
-    if (!res)
-		return false;
-
-	return res.rows() > 0;
+    return con->deleteWhere<Stock>(where);
 }
 
-bool Stock::replaceAll(const std::vector<Stock>& cont) 
+
+uint32_t Stock::replaceAll(const std::vector<Stock>& cont) 
 {
-    /*
-	mysqlpp::Query::MaxPacketInsertPolicy<> insert_policy(1000);
-    replacefrom
-    query.replacefrom(stock_vector.begin(), stock_vector.end(),
-        insert_policy);
-
-	query.insertfrom(stock_vector.begin(), stock_vector.end(),
-		insert_policy);
-	*/
-	return true;
+    ScopedMySqlConn con;
+    return con->replaceAll<Stock>(cont);
 }
 
-#if 0
-void Stock::replaceDB()
+uint32_t Stock::replaceDB() const
 {
-
+    ScopedMySqlConn con;
+    return con->replaceDB<Stock>(*this);
 }
-
-void Stock::updateDB()
-{
-
-}
-
-void Stock::insertDB()
-{
-
-}
-
-void Stock::selectDB(const char* where/* = NULL*/)
-{
-
-}
-#endif

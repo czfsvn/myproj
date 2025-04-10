@@ -16,7 +16,7 @@ namespace ns_test
             std::vector<Stock> vec = con->query<Stock>("select * from stock");
             for (Stock& st : vec)
             {
-                st.print();
+                st.dump();
             }
         }
 
@@ -25,7 +25,7 @@ namespace ns_test
             std::vector<Stock> vec = con->query<Stock>("select * from stock");
             for (Stock& st : vec)
             {
-                st.print();
+                st.dump();
             }
         }
 
@@ -35,7 +35,7 @@ namespace ns_test
                 con->query<Stock>("select * from stock", "where item='Pickle Relish'");
             for (Stock& st : vec)
             {
-                st.print();
+                st.dump();
             }
         }
     }
@@ -59,7 +59,7 @@ int main()
 
     MySqlConnectPool::getMe().init(config);
 
-    ns_test::test();
+    //ns_test::test();
 
     ns_api::main();
 
