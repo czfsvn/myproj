@@ -1,0 +1,59 @@
+# 解决方案文件
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# 项目文件
+*.vspscc
+*.vssscc
+*.VC.db
+*.VC.VC.opendb
+*.sdf
+*.sqlite3
+*.ipch
+*.opensdf
+*.tlog
+*.log
+*.vspx
+*.vsmdi
+*.TestResults
+*.cache
+*.ilk
+*.pdb
+*.obj
+*.lib
+*.exp
+*.pch
+*.idb
+*.sbr
+*.aps
+*.lastbuildstate
+*.bsc
+*.ncb
+*.suo
+*.VC.db
+*.VC.VC.opendb
+
+# 生成的文件
+bin/
+obj/
+Debug/
+Release/
+x64/
+Win32/
+ARM/
+ARM64/
+
+# 本地配置文件
+appsettings.Development.json
+secrets.json
+
+# 测试文件
+TestResults/
+TestResults.*
+
+# 工具和扩展
+.vs/
+.vscode/
+*.vsconfig
