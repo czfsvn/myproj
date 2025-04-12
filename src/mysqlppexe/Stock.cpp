@@ -54,20 +54,20 @@ std::vector<Stock> Stock::loadWhere(const std::string& where)
     return con->loadWhere<Stock>(where);
 }
 
-bool Stock::deleteWhere(const std::string& where)
+uint64_t Stock::deleteWhere(const std::string& where)
 {
     ScopedMySqlConn con;
     return con->deleteWhere<Stock>(where);
 }
 
 
-uint32_t Stock::replaceAll(const std::vector<Stock>& cont) 
+uint64_t Stock::replaceAll(const std::vector<Stock>& cont) 
 {
     ScopedMySqlConn con;
     return con->replaceAll<Stock>(cont);
 }
 
-uint32_t Stock::replaceDB() const
+uint64_t Stock::replaceDB() const
 {
     ScopedMySqlConn con;
     return con->replaceDB<Stock>(*this);

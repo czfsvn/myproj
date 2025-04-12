@@ -2,7 +2,7 @@
 
 #include <mysql++.h>
 #include "Log.h"
-#include "Pool.h"
+#include "ConnectionPool.h"
 
 class Stock
 {
@@ -14,11 +14,11 @@ public:
 
 
 	static std::vector<Stock> loadWhere(const std::string& where);
-    static bool               deleteWhere(const std::string& where);
-    static uint32_t           replaceAll(const std::vector<Stock>& cont);
+    static uint64_t           deleteWhere(const std::string& where);
+    static uint64_t           replaceAll(const std::vector<Stock>& cont);
     
 
-	uint32_t replaceDB() const;
+	uint64_t replaceDB() const;
 
 	void dump() const
 	{

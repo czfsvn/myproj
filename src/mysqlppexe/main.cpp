@@ -2,7 +2,7 @@
 
 #include "ApiTest.h"
 #include "Log.h"
-#include "Pool.h"
+#include "ConnectionPool.h"
 #include "Stock.h"
 
 
