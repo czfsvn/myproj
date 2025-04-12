@@ -17,6 +17,8 @@ namespace cncpp
         explicit RedisReply(redisReply* reply);
         RedisReply() {}
 
+        void reset();
+
         // 类型检查方法
         bool isNull() const;
         bool isString() const;
@@ -34,7 +36,7 @@ namespace cncpp
 
     private:
         bool parseFrom(redisReply* reply);
-        void reset();
+        
 
     private:
         int16_t                 type_    = 0;

@@ -211,6 +211,9 @@ namespace cncpp
                 remove(it++);
             }
         }
+
+    private:
+        uint16_t max_conn_size_ = 0;
     };
 
     template <typename T, typename CONFIG>

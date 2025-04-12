@@ -158,6 +158,7 @@ namespace cncpp
 
     RedisConn::RedisConn(const RedisConfig& cfg) : config_(cfg)
     { 
+        INFO("[RedisConn][RedisConn] create connection");
         connect();
     }
 
@@ -190,7 +191,7 @@ namespace cncpp
         if (config_.dbindex)
             select(config_.dbindex);
 
-        TRACE("[RedisConn] connect success");
+        INFO("[RedisConn] connect success");
     }
 
     bool RedisConn::isConnected()

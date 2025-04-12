@@ -9,9 +9,16 @@
 #include <stdexcept>
 
 #include <adapters/libevent.h>
+//#include <fmt/format.h>
+
+#define FMT_HEADER_ONLY
+#include <fmt/format.h>
 
 #include "RedisConn.h"
 #include "ConnectionPool.h"
+#include "ThreadPool.h"
+#include "Misc.h"
+#include "Log.h"
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -382,10 +389,104 @@ namespace ns_syncredis
 
 }
 
+namespace ns_async
+{
+    struct RedisTask : cncpp::BaseTask
+    {
+        cncpp::RedisReply reply = {};
+    };
+
+    struct SetTask : RedisTask
+    {
+        ~SetTask()
+        {
+            INFO("[SetTask][SetTask] final {} {}", key, value);
+        }
+
+        bool work() override 
+        {
+            ScopedRedisConn con;
+            reply.reset();
+            INFO("[SetTask][work] set {} {}", key, value);
+            reply = con->command(fmt::format("SET {} {}", key, value));
+            return true;
+        }
+
+        bool done() override 
+        {
+            INFO("[SetTask][done] set {} {}", key, value);
+            reply.dumpResult();
+            return true;
+        }
+
+        std::string key = "";
+        std::string value = "";
+    };
+
+    struct GetTask : RedisTask
+    {
+        ~GetTask()
+        {
+            INFO("[GetTask][GetTask] final {}", key);
+        }
+
+        bool work() override 
+        {
+            ScopedRedisConn con;
+            reply.reset();
+            INFO("[GetTask][work] get {}", key);
+            reply = con->command(fmt::format("GET {}", key));
+            return true;
+        }
+
+        bool done() override 
+        {
+            INFO("[GetTask][done] get {}", key);
+            reply.dumpResult();
+            return true;
+        }
+
+        std::string key   = "";
+    };
+
+    void main() 
+    {
+        INFO("[ns_async][main] init");
+        cncpp::TaskPoolPtr redis_task_pool = std::make_shared<cncpp::TaskPool>(2);
+        redis_task_pool->init();
+        redis_task_pool->startAll();
+
+        const uint32_t max_task = 5;
+        for (uint32_t idx = 0; idx < max_task; idx++)
+        {
+            auto task   = std::make_shared<SetTask>();
+            task->key   = std::to_string(idx);
+            task->value = std::to_string(idx + 100);
+
+            redis_task_pool->addNewTask(task);
+        }
+
+        for (uint32_t idx = 0; idx < max_task; idx++)
+        {
+            auto task = std::make_shared<GetTask>();
+            task->key = std::to_string(idx);
+
+            redis_task_pool->addNewTask(task);
+        }
+
+        while (true)
+        {
+            cncpp::sleepfor_milliseconds(1);
+            redis_task_pool->runInMain();
+        }
+
+        redis_task_pool->joinAll();
+    }
+}
+
 
 int main(int argc, char** argv)
 {
-
     cncpp::RedisConfig config;
     config.host    = REDIS_IP;
     config.dbindex = 1;
@@ -397,6 +498,7 @@ int main(int argc, char** argv)
     //hiredis_example_c::main();
 
     //ns_hiredis_libevent::main(argc, argv);
-    ns_syncredis::main();
+    // ns_syncredis::main();
+    ns_async::main();
     return 0;
 }
