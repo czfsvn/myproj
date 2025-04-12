@@ -109,13 +109,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(CPPTHIRD)\hiredis\include;$(CPPTHIRD)\libevent\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CPPTHIRD)\hiredis\include;$(CPPTHIRD)\libevent\include;..\..\src\Base</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(CPPTHIRD)\hiredis\lib\x64;$(CPPTHIRD)\libevent\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>hiredis_d.lib;event_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CPPTHIRD)\hiredis\lib\x64;$(CPPTHIRD)\libevent\lib\x64;..\..\libs\$(Configuration)\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>hiredis_d.lib;event_d.lib;Base.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,10 +136,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\my_hiredis\main.cpp" />
-    <ClCompile Include="..\..\src\my_hiredis\RedisConn.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\my_hiredis\RedisConn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

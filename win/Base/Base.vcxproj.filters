@@ -30,7 +30,10 @@
     <ClInclude Include="..\..\src\Base\ConnectionPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Base\MySqlconn.h">
+    <ClInclude Include="..\..\src\Base\MySqlConn.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Base\RedisConn.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,7 +44,10 @@
     <ClCompile Include="..\..\src\Base\ConnectionPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Base\MySqlconn.cpp">
+    <ClCompile Include="..\..\src\Base\MySqlConn.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Base\RedisConn.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

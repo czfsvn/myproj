@@ -119,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(CPPTHIRD)\spdlog1.5.1\include;$(CPPTHIRD)\mysql\include;$(CPPTHIRD)\mysqlpp-3.3\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CPPTHIRD)\spdlog1.5.1\include;$(CPPTHIRD)\mysql\include;$(CPPTHIRD)\mysqlpp-3.3\include;$(CPPTHIRD)\hiredis\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -157,14 +157,16 @@
     <ClInclude Include="..\..\src\Base\Configs.h" />
     <ClInclude Include="..\..\src\Base\ConnectionPool.h" />
     <ClInclude Include="..\..\src\Base\Log.h" />
-    <ClInclude Include="..\..\src\Base\MySqlconn.h" />
+    <ClInclude Include="..\..\src\Base\MySqlConn.h" />
+    <ClInclude Include="..\..\src\Base\RedisConn.h" />
     <ClInclude Include="..\..\src\Base\Singleton.h" />
     <ClInclude Include="..\..\src\Base\TimeUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Base\ConnectionPool.cpp" />
     <ClCompile Include="..\..\src\Base\Log.cpp" />
-    <ClCompile Include="..\..\src\Base\MySqlconn.cpp" />
+    <ClCompile Include="..\..\src\Base\MySqlConn.cpp" />
+    <ClCompile Include="..\..\src\Base\RedisConn.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

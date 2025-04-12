@@ -1,3 +1,4 @@
+#if 0
 #include <boost/asio.hpp>
 #include <bredis/Connection.hpp>
 #include <iostream>
@@ -30,9 +31,10 @@ namespace boost_sync
         return 0;
     }
 }
+#endif
 
 int main()
 {
-    boost_sync::main();
-    reutrn 1;
+    //boost_sync::main();
+    return 1;
 }

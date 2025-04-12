@@ -114,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(CPPTHIRD)\mysql\include;$(CPPTHIRD)\mysqlpp-3.3\include;$(CPPTHIRD)\spdlog1.5.1\include;D:\WorkCodes\mycode\myproj\src\Base</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CPPTHIRD)\mysql\include;$(CPPTHIRD)\mysqlpp-3.3\include;$(CPPTHIRD)\spdlog1.5.1\include;..\..\src\Base</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
