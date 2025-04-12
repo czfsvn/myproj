@@ -19,7 +19,7 @@ namespace cncpp
     struct RedisConfig
     {
         std::string host    = {};
-        uint32_t    port    = 3306;
+        uint32_t    port    = 6379;
         uint32_t    dbindex = 0;
     };
 } // namespace cncpp

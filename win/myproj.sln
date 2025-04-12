@@ -15,6 +15,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boost_redis", "boost_redis\boost_redis.vcxproj", "{CB5056F5-1E7B-4F6B-8CC7-1E927AB5E6C4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "my_hiredis", "my_hiredis\my_hiredis.vcxproj", "{BE15FAEA-610E-45F7-8E7E-FA1B2E8AC5D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25E75809-DD5A-4522-8978-38D9986E966E} = {25E75809-DD5A-4522-8978-38D9986E966E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,6 +11,7 @@
 #include <adapters/libevent.h>
 
 #include "RedisConn.h"
+#include "ConnectionPool.h"
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -358,16 +359,40 @@ namespace ns_syncredis
         }
     }
 
+
+    void test3()
+    {
+        {
+            ScopedRedisConn redis;
+            // 设置值
+
+            redis->command("SET username alice").dumpResult();
+
+            // 获取值
+            redis->command("GET username").dumpResult();
+        }
+    }
+
     void main() 
     {
         //test1();
-        test2();
+        //test2();
+        test3();
     }
+
 }
 
 
 int main(int argc, char** argv)
 {
+
+    cncpp::RedisConfig config;
+    config.host    = REDIS_IP;
+    config.dbindex = 1;
+    config.port    = 6379;
+
+    RedisConnectPool::getMe().init(config);
+
     //ns_base_example::main();
     //hiredis_example_c::main();
 

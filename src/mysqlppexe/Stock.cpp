@@ -1,7 +1,7 @@
 #include "Stock.h"
 //#include <sstream>
 //#include "Pool.h"
-
+#include "MySqlConn.h"
 
 Stock::Stock(const mysqlpp::Row& row)
 {
@@ -59,7 +59,6 @@ uint64_t Stock::deleteWhere(const std::string& where)
     ScopedMySqlConn con;
     return con->deleteWhere<Stock>(where);
 }
-
 
 uint64_t Stock::replaceAll(const std::vector<Stock>& cont) 
 {

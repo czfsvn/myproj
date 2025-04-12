@@ -2,7 +2,6 @@
 
 #include <mysql++.h>
 #include "Log.h"
-#include "ConnectionPool.h"
 
 class Stock
 {

@@ -174,6 +174,5 @@ int test()
 int main()
 {
     cpp_redis_example::cpp_redis_client();
-    return 0;
-    
+    return 0;    
 }
