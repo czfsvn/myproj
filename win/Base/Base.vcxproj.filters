@@ -51,6 +51,21 @@
     <ClInclude Include="..\..\src\Base\Misc.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Base\MPSCQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Base\ProcessPriority.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Base\ProducerConsumerQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Base\LockedQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Base\BoostThreadPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Base\Log.cpp">
@@ -69,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Base\ThreadPool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Base\ProcessPriority.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
