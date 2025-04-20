@@ -134,7 +134,7 @@ namespace cncpp
 #ifdef _MULTI_THREADS
             recived_msg_queue_.Enqueue(msg);
 #else
-            // doMsg(msg);
+            doMsg(msg);
 #endif
         }
     }

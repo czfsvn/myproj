@@ -1,0 +1,1 @@
+D:\WorkCodes\mycode\cppthird\win\protobuf\bin\protoc.exe --proto_path=D:\WorkCodes\mycode\myproj\src\Shared\protos --cpp_out=D:\WorkCodes\mycode\myproj\src\Shared\protos messages.proto
