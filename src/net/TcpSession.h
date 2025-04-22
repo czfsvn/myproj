@@ -29,6 +29,8 @@ namespace cncpp
         std::string getRemoteAddr() const;
         uint16_t    getRemotePort() const;
 
+        SOCKET_PTR getSocket() const;
+
         void onReceive(const BaseBufferPtr& buf);
         void onReceive(const char* buf, const uint32_t& size);
 

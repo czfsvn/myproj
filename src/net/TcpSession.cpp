@@ -14,6 +14,11 @@ namespace cncpp
         msg_callback_ = cb;
     }
 
+    SOCKET_PTR TcpSession::getSocket() const
+    {
+        return socket_;
+    }
+
     std::string TcpSession::getRemoteAddr() const
     {
         if (!socket_)

@@ -5,9 +5,9 @@
 
 namespace cncpp
 {
-    TcpAccepter::TcpAccepter(const uint16_t port)
-        : listen_port_(port), acceptor_(sIoContextPool.get_io_context() ,
-                                  boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+    TcpAccepter::TcpAccepter(IO_CONTEXT& io_context, const uint16_t port)
+        : listen_port_(port),
+          acceptor_(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
     {
     }
 

@@ -18,11 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\Chat\server1\main.cpp" />
+    <ClCompile Include="..\..\..\src\Chat\server1\server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\Chat\server1\server.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1f313948-b19e-435d-b270-80c42a5f74bd}</ProjectGuid>
-    <RootNamespace>net</RootNamespace>
+    <ProjectGuid>{00391f3f-2aaa-450f-a81f-309ba79b9ffb}</ProjectGuid>
+    <RootNamespace>server1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +47,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -71,8 +78,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\..\libs\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>..\..\output\$(Configuration)\$(Platform)\$(ProjectName)</IntDir>
+    <OutDir>..\..\..\bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>..\..\..\output\$(Configuration)\$(Platform)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,12 +115,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\src\Base;$(BOOST_INCLUDE);$(CPPTHIRD)\spdlog1.5.1\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src\Base;..\..\..\src\net;$(BOOST_INCLUDE);$(CPPTHIRD)\spdlog1.5.1\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\libs\$(Configuration)\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Base.lib;net.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,21 +141,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\net\Accepter.cpp" />
-    <ClCompile Include="..\..\src\net\IoContextPool.cpp" />
-    <ClCompile Include="..\..\src\net\TcpClient.cpp" />
-    <ClCompile Include="..\..\src\net\TcpSession.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\net\Accepter.h" />
-    <ClInclude Include="..\..\src\net\AsioTimer.h" />
-    <ClInclude Include="..\..\src\net\Buffer.h" />
-    <ClInclude Include="..\..\src\net\IoContextPool.h" />
-    <ClInclude Include="..\..\src\net\NetDefine.h" />
-    <ClInclude Include="..\..\src\net\TcpClient.h" />
-    <ClInclude Include="..\..\src\net\TcpSession.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

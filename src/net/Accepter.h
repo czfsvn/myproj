@@ -8,7 +8,7 @@ namespace cncpp
 	class TcpAccepter
 	{
     public:
-        TcpAccepter(const uint16_t port);
+        TcpAccepter(IO_CONTEXT& io_context, const uint16_t port);
 
 		void startAccept();
 

@@ -23,6 +23,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "net", "net\net.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "Shared\Shared.vcxproj", "{8FB149D1-0AE8-451C-98B5-4EF83F8109CE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{24C60E65-BFAB-4B1D-9A03-7695EC5A12E1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatClient", "Chat\ChatClient\ChatClient.vcxproj", "{548C7469-20C4-4482-BA00-6CCD38CE3852}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server1", "Chat\server1\server1.vcxproj", "{00391F3F-2AAA-450F-A81F-309BA79B9FFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -87,9 +93,29 @@ Global
 		{8FB149D1-0AE8-451C-98B5-4EF83F8109CE}.Release|x64.Build.0 = Release|x64
 		{8FB149D1-0AE8-451C-98B5-4EF83F8109CE}.Release|x86.ActiveCfg = Release|Win32
 		{8FB149D1-0AE8-451C-98B5-4EF83F8109CE}.Release|x86.Build.0 = Release|Win32
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Debug|x64.ActiveCfg = Debug|x64
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Debug|x64.Build.0 = Debug|x64
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Debug|x86.ActiveCfg = Debug|Win32
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Debug|x86.Build.0 = Debug|Win32
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Release|x64.ActiveCfg = Release|x64
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Release|x64.Build.0 = Release|x64
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Release|x86.ActiveCfg = Release|Win32
+		{548C7469-20C4-4482-BA00-6CCD38CE3852}.Release|x86.Build.0 = Release|Win32
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Debug|x64.ActiveCfg = Debug|x64
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Debug|x64.Build.0 = Debug|x64
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Debug|x86.ActiveCfg = Debug|Win32
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Debug|x86.Build.0 = Debug|Win32
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Release|x64.ActiveCfg = Release|x64
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Release|x64.Build.0 = Release|x64
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Release|x86.ActiveCfg = Release|Win32
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{548C7469-20C4-4482-BA00-6CCD38CE3852} = {24C60E65-BFAB-4B1D-9A03-7695EC5A12E1}
+		{00391F3F-2AAA-450F-A81F-309BA79B9FFB} = {24C60E65-BFAB-4B1D-9A03-7695EC5A12E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13DE748B-85DE-43A6-8BC9-5296BAEFF971}

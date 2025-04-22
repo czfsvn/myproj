@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Singleton.h"
+#include "NetDefine.h"
 
 
 namespace cncpp
@@ -25,13 +26,13 @@ namespace cncpp
         void stop();
 
         /// Get an io_context to use.
-        boost::asio::io_context& get_io_context();
+        IO_CONTEXT& get_io_context();
 
     private:
         IoConnectPool(const IoConnectPool&)            = delete;
         IoConnectPool& operator=(const IoConnectPool&) = delete;
 
-        typedef std::shared_ptr<boost::asio::io_context> io_context_ptr;
+        typedef std::shared_ptr<IO_CONTEXT> io_context_ptr;
         typedef boost::asio::executor_work_guard<boost::asio::io_context::executor_type>
             io_context_work;
 
@@ -48,4 +49,4 @@ namespace cncpp
     };
 }
 
-#define sIoContextPool IoConnectPool::getMe()
+#define sIoContextPool cncpp::IoConnectPool::getMe()
