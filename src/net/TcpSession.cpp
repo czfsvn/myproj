@@ -9,7 +9,7 @@ namespace cncpp
     {
     }
 
-    void TcpSession::setMsgCallbacl(const MessageCallBack& cb)
+    void TcpSession::setMsgCallback(const MessageCallBack& cb)
     {
         msg_callback_ = cb;
     }

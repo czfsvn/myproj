@@ -18,7 +18,7 @@ namespace cncpp
     public:
         TcpSession(IO_CONTEXT& ioc, const SOCKET_PTR sockptr);
 
-        void setMsgCallbacl(const MessageCallBack& cb);
+        void setMsgCallback(const MessageCallBack& cb);
 
         void start();
 
