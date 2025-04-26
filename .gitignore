@@ -34,14 +34,15 @@
 *.suo
 *.VC.db
 *.VC.VC.opendb
+*.exe
 
 # 生成的文件
-bin/
+#bin/
 obj/
 Debug/
 Release/
-x64/
-Win32/
+#x64/
+#Win32/
 ARM/
 ARM64/
 
@@ -57,3 +58,5 @@ TestResults.*
 .vs/
 .vscode/
 *.vsconfig
+
+!x64/*.dll
