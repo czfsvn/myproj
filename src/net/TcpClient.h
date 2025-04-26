@@ -13,8 +13,6 @@ namespace cncpp
 
         void onConnected();
 
-        void handle_connect(const boost::system::error_code& err);
-
     private:
         boost::asio::ip::tcp::resolver resolver_;
         cncpp::TcpSession              session_;
